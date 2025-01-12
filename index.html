@@ -209,16 +209,24 @@
 
     <!-- Main method. -->
     <div class="columns is-centered">
-      <div class="column is-full-width">
+      <div class="column is-full-width has-text-justified">
         <h2 class="title is-3">Method</h2>
         <!-- Another title. -->
-        We aim to find the best combination of weak (class labels) and full annotations (segmentation maps). Starting from an initial point, defined by a small budget $B_0$ and a number of classificacion and segmentation samples ($C_0$ and $S_0$ respectively), at each iteration we sample the space and fit a Gaussian Process to the 3D points. Then, we use it to predict the Expected Improvement within the region up to the budget goal - $B$. Finally, we find a trajectory with ever-increasing Expected Improvement (EI) and select $(\Delta C, \Delta S)$ that improves EI by a fixed fraction of its maximum possible value.
-        <div class="content has-text-justified">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/method.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
+        <p>
+          We introduce a new learnable adaptation prompt $A_\ell\in\mathbb{R}^{N\times{}D}$ at each layer $\ell$ of the mask decoder's transformer. 
+          The adaptation prompts are used to compute correction factors that modify the embeddings of the transformer without retraining its parameters. 
+          Formally, let $T_\ell\in\mathbb{R}^{M\times D}$ be the embeddings obtained as the output of the cross-attention operation at layer $\ell$.
+          Then, we feed $A_\ell$ and $T_\ell$ to an additional attention block, where the embeddings $T_\ell$ act as queries and the adapter weights $A_\ell$ act as keys and values. 
+          The attention scores $S_\ell$ are calculated as usual and projected back to the model dimension $D$ with a linear layer, $S'_\ell=\text{Linear}^o_\ell(S_\ell)$. The result $S'_\ell$ serves as the correction factor of the original embeddings,
+        </p>
+
+        <p>
+          \[ T'_\ell = \text{Linear}^t_\ell(T_\ell + g_\ell \cdot S'_\ell) \]
+
+        </p>
+        <p>
+          where the learnable gating factor~$g_\ell\in\mathbb{R}$ is initialized to0 to ensure no disruption during the early stages of adaptation learning.
+        </p>
         <br/>
         <!--/ Another title. -->
       </div>
@@ -229,37 +237,20 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-2">Results</h2>
-        <h4 class="title is-4">Main results</h4>
+        <p class="has-text-justified"> 
+          We evaluate our method on four datasets. Three of them are medical datasets and one is a natural image dataset. We evaluate our method in three scenarios: full supervision, domain generalization and test-time domain adaptation. For exact numbers, please refer to the paper linked above.
+        </p>  
+        <h4 class="title is-4" style="margin-top: 20px;">Full Supervision</h4>
         <div class="content has-text-justified">
-          <p>
-            We compared our method in four datasets against different fixed strategies and an estimated best fixed strategy with $\alpha_s = 12$. We can make the following observations:
-            <ul>
-              <li>No single fixed strategy performs optimally across the different datasets evaluated.</li>
-              <li>The estimated best fixed strategy (in red) progressively loses competitiveness as budget increases.</li>
-              <li>Our method produces good performances consistently across different budget quantities and datsets.</li> 
-            </ul>
-          </p>
-          <img src = "./static/images/main_result.svg" alt="Main results"/>
+          <img src = "./static/images/full_supervision.webp" alt="Full Supervision"/>
         </div>
-
-        <h4 class="title is-4">Surfaces</h4>
+        <h4 class="title is-4" style="margin-top: 20px;">Domain Generalization</h4>
         <div class="content has-text-justified">
-          <p>
-            We assume that segmentation performance grows logarithmically with data, and we impose that in the mean prior of the Gaussian Process:
-            \[ \mu(C, S) = \gamma_c\log(\beta_cC+1) + \gamma_s\log(\beta_sS+1) \]
-          </p>
-          <img src = "./static/images/surfaces.svg" alt="Surfaces"/>
-          <p>
-            We see that this assumption holds in general for the four datasets but SUIM, hence the drop in performance for high budgets on this dataset.
-          </p>
+          <img src = "./static/images/generalization.webp" alt="Full Supervision"/>
         </div>
-
-        <h4 class="title is-4">Sensitivity to $\alpha_s$</h4>
+        <h4 class="title is-4" style="margin-top: 20px;">Test-time Domain Adaptation</h4>
         <div class="content has-text-justified">
-          <p>
-            Some datasets require different expertise and domain knowledge to annotate, and that is translated in different $\alpha_s$ in our model. We see that our method is robust regardless of the value of $\alpha_s$.
-          </p>
-          <img src = "./static/images/alphas_result.svg" alt="Alpha results"/>
+          <img src = "./static/images/ttda.webp" alt="Full Supervision"/>
         </div>
       </div>
     </div>
@@ -272,11 +263,11 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{tejero2023full,
-  title={Full or Weak annotations? An adaptive strategy for budget-constrained annotation campaigns},
-  author={Tejero, Javier Gamazo and Zinkernagel, Martin S and Wolf, Sebastian and Sznitman, Raphael and Neila, Pablo M{\'a}rquez},
-  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2023}
+    <pre><code>@inproceedings{tejero2025samda,
+  title={SAM-DA: Decoder Adapter for Efficient Medical Domain Adaptation },
+  author={Gamazo Tejero, Javier and Schmid, Moritz and M{\'a}rquez Neila, Pablo and Zinkernagel, Martin S and Wolf, Sebastian and Sznitman, Raphael },
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
+  year={2025}
 }</code></pre>
   </div>
 </section>

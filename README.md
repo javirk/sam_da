@@ -4,11 +4,11 @@ This is the repository that contains source code for the [SAM-DA website](https:
 
 If you find _SAM-DA_ useful for your work please cite:
 ```
-@article{tejero2023full,
-  title={Full or Weak annotations? An adaptive strategy for budget-constrained annotation campaigns},
-  author={Tejero, Javier Gamazo and Zinkernagel, Martin S and Wolf, Sebastian and Sznitman, Raphael and Neila, Pablo M{\'a}rquez},
-  journal={arXiv preprint arXiv:2303.11678},
-  year={2023}
+@inproceedings{tejero2025samda,
+  title={SAM-DA: Decoder Adapter for Efficient Medical Domain Adaptation },
+  author={Gamazo Tejero, Javier and Schmid, Moritz and M{\'a}rquez Neila, Pablo and Zinkernagel, Martin S and Wolf, Sebastian and Sznitman, Raphael },
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
+  year={2025}
 }
 ```
 
