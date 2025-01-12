@@ -1,8 +1,8 @@
-# Full or Weak annotations?
+# SAM-DA: Decoder Adapter for Efficient Medical Domain Adaptation
 
-This is the repository that contains source code for the [Full or Weak annotations website](https://www.javiergamazo.com/fullweak).
+This is the repository that contains source code for the [SAM-DA website](https://www.javiergamazo.com/sam_da).
 
-If you find _Full or Weak annotations?_ useful for your work please cite:
+If you find _SAM-DA_ useful for your work please cite:
 ```
 @article{tejero2023full,
   title={Full or Weak annotations? An adaptive strategy for budget-constrained annotation campaigns},
