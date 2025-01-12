@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="SAM-DA: Decoder Adapter for Efficient Medical Domain Adaptation">
+  <meta name="keywords" content="SAM-DA">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAM-DA: Decoder Adapter for Efficient Medical Domain Adaptation</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+  MathJax = {
+    tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+  };
+  </script>
+</head>
+<body>
+<!--
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>-->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SAM-DA: Decoder Adapter for Efficient Medical Domain Adaptation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.javiergamazo.com">Javier Gamazo Tejero</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Moritz Schmid<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Pablo Márquez Neila<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Martin Zinkernagel<sup>2</sup>,
+            </span>
+            <span class="author-block">
+              Sebastian Wolf<sup>2</sup>,
+            </span>
+            <span class="author-block">
+              Raphael Sznitman<sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Bern,</span>
+            <span class="author-block"><sup>2</sup>Inselspital Bern</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2303.11678.pdf"
+                   class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2303.11678"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=PixUJ9Xl5_8&ab_channel=JavierGamazoTejero"
+                   class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Main figure -->
+    <div class="columns is-centered has-text-centered">
+      <img src = "./static/images/method.svg" alt="Method"/>
+    </div>
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            This paper addresses the domain adaptation challenge for semantic segmentation in medical imaging. 
+            Despite the impressive performance of recent foundational segmentation models like SAM on natural images, 
+            they struggle with medical domain images. Beyond this, recent approaches that perform end-to-end fine-tuning of models 
+            are simply not computationally tractable. To address this, we propose a novel SAM adapter approach that minimizes the number 
+            of trainable parameters while achieving comparable performances to full fine-tuning. The proposed SAM adapter is 
+            strategically placed in the mask decoder, offering excellent and broad generalization capabilities and improved 
+            segmentation across both fully supervised and test-time domain adaptation tasks. Extensive validation on four datasets 
+            showcases the adapter's efficacy, outperforming existing methods while training less than 1% of SAM's total parameters.  
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/PixUJ9Xl5_8?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Main method. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+        <!-- Another title. -->
+        We aim to find the best combination of weak (class labels) and full annotations (segmentation maps). Starting from an initial point, defined by a small budget $B_0$ and a number of classificacion and segmentation samples ($C_0$ and $S_0$ respectively), at each iteration we sample the space and fit a Gaussian Process to the 3D points. Then, we use it to predict the Expected Improvement within the region up to the budget goal - $B$. Finally, we find a trajectory with ever-increasing Expected Improvement (EI) and select $(\Delta C, \Delta S)$ that improves EI by a fixed fraction of its maximum possible value.
+        <div class="content has-text-justified">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/method.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <br/>
+        <!--/ Another title. -->
+      </div>
+    </div>
+    <!--/ Main method. -->
+
+    <!-- Results. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-2">Results</h2>
+        <h4 class="title is-4">Main results</h4>
+        <div class="content has-text-justified">
+          <p>
+            We compared our method in four datasets against different fixed strategies and an estimated best fixed strategy with $\alpha_s = 12$. We can make the following observations:
+            <ul>
+              <li>No single fixed strategy performs optimally across the different datasets evaluated.</li>
+              <li>The estimated best fixed strategy (in red) progressively loses competitiveness as budget increases.</li>
+              <li>Our method produces good performances consistently across different budget quantities and datsets.</li> 
+            </ul>
+          </p>
+          <img src = "./static/images/main_result.svg" alt="Main results"/>
+        </div>
+
+        <h4 class="title is-4">Surfaces</h4>
+        <div class="content has-text-justified">
+          <p>
+            We assume that segmentation performance grows logarithmically with data, and we impose that in the mean prior of the Gaussian Process:
+            \[ \mu(C, S) = \gamma_c\log(\beta_cC+1) + \gamma_s\log(\beta_sS+1) \]
+          </p>
+          <img src = "./static/images/surfaces.svg" alt="Surfaces"/>
+          <p>
+            We see that this assumption holds in general for the four datasets but SUIM, hence the drop in performance for high budgets on this dataset.
+          </p>
+        </div>
+
+        <h4 class="title is-4">Sensitivity to $\alpha_s$</h4>
+        <div class="content has-text-justified">
+          <p>
+            Some datasets require different expertise and domain knowledge to annotate, and that is translated in different $\alpha_s$ in our model. We see that our method is robust regardless of the value of $\alpha_s$.
+          </p>
+          <img src = "./static/images/alphas_result.svg" alt="Alpha results"/>
+        </div>
+      </div>
+    </div>
+    <!--/ Results. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{tejero2023full,
+  title={Full or Weak annotations? An adaptive strategy for budget-constrained annotation campaigns},
+  author={Tejero, Javier Gamazo and Zinkernagel, Martin S and Wolf, Sebastian and Sznitman, Raphael and Neila, Pablo M{\'a}rquez},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2023}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://arxiv.org/pdf/2303.11678.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/javirk" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a> and has been adapted from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
